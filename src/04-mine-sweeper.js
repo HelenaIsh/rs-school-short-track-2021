@@ -5,7 +5,7 @@
  * we want to create a Minesweeper game setup.
  *
  * @param {Array<Array>} matrix
- * @return {Array<Array>}
+ * @return {number}
  *
  * @example
  * matrix = [
@@ -21,8 +21,31 @@
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new Error('Not implemented');
+function findNeighbours(matrix, i, j) {
+  let neighbours = 0;
+  for (let x = i - 1; x <= i + 1; x++) {
+    for (let y = j - 1; y <= j + 1; y++) {
+      if (x >= 0 && y >= 0 && x < matrix.length && y < matrix[0].length) {
+        if (x !== i || y !== j) {
+          if (matrix[x][y]) {
+            neighbours++;
+          }
+        }
+      }
+    }
+  }
+  return neighbours;
+}
+
+function minesweeper(matrix) {
+  const result = [];
+  for (let i = 0; i < matrix.length; i++) {
+    result[i] = [];
+    for (let j = 0; j < matrix[i].length; j++) {
+      result[i].push(findNeighbours(matrix, i, j));
+    }
+  }
+  return result;
 }
 
 module.exports = minesweeper;
